@@ -1,4 +1,6 @@
 const { google } = require('googleapis');
+const people = google.people('v1');
+
 require('dotenv').config(); 
 
 // Juste pour vérification (tu peux les retirer après)
@@ -12,7 +14,7 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.REDIRECT_URI
 );
 
-const SCOPES = ['https://www.googleapis.com/auth/userinfo.email'];
+const SCOPES = ['https://people.googleapis.com/userinfo.email'];
 
 const getAuthUrl = (req, res) => {
   const url = oauth2Client.generateAuthUrl({
