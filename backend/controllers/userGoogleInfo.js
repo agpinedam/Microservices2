@@ -1,16 +1,15 @@
 const { google } = require('googleapis');
+const people = google.people('v1');
+
 require('dotenv').config(); 
 
 const oauth2Client = new google.auth.OAuth2(
-  console.log('CLIENT_ID', process.env.CLIENT_ID),
-  console.log('CLIENT_SECRET', process.env.CLIENT_SECRET),
-  console.log('REDIRECT_URI', process.env.REDIRECT_URI),
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
   process.env.REDIRECT_URI
 );
 
-const SCOPES = ['https://www.googleapis.com/auth/userinfo.email'];
+const SCOPES = ['https://people.googleapis.com/userinfo.email'];
 
 const getAuthUrl = (req, res) => {
   const url = oauth2Client.generateAuthUrl({
