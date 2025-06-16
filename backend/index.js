@@ -14,9 +14,11 @@ app.get('/', (req, res) => {
 // Importar rutas
 const userRoutes = require('./routes/userRoutes');
 const flightRoutes = require('./routes/flightRoutes');
+const googleRoutes = require('./routes/userGoogleInfo');
 
 app.use('/api/users', userRoutes);
 app.use('/api/flights', flightRoutes);
+app.use('/auth/google', googleRoutes);
 
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
