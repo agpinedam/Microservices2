@@ -1,7 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-    
+    const navigate = useNavigate();
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center font-sans">

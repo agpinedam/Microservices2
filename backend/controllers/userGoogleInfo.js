@@ -1,10 +1,12 @@
 const { google } = require('googleapis');
 require('dotenv').config(); 
 
+// Juste pour vérification (tu peux les retirer après)
+console.log('CLIENT_ID:', process.env.CLIENT_ID);
+console.log('CLIENT_SECRET:', process.env.CLIENT_SECRET);
+console.log('REDIRECT_URI:', process.env.REDIRECT_URI);
+
 const oauth2Client = new google.auth.OAuth2(
-  console.log('CLIENT_ID', process.env.CLIENT_ID),
-  console.log('CLIENT_SECRET', process.env.CLIENT_SECRET),
-  console.log('REDIRECT_URI', process.env.REDIRECT_URI),
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
   process.env.REDIRECT_URI
@@ -32,7 +34,7 @@ const handleOAuthCallback = async (req, res) => {
   });
 
   const email = me.data.emailAddresses?.[0]?.value || 'No email found';
-  res.send(`Tu email es: ${email}`);
+  res.send(`Tu email est : ${email}`);
 };
 
 module.exports = { getAuthUrl, handleOAuthCallback };
