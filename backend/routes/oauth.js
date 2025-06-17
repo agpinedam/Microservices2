@@ -12,6 +12,7 @@ async function getUserData(access_token) {
   //console.log('response',response);
   const data = await response.json();
   console.log('data',data);
+  return data;
 }
 
 
@@ -35,14 +36,24 @@ router.get('/', async function(req, res, next) {
         console.info('Tokens acquired.');
         const user = oAuth2Client.credentials;
         console.log('credentials',user);
-        await getUserData(oAuth2Client.credentials.access_token);
+        const userData = await getUserData(oAuth2Client.credentials.access_token);
+
+        const params = new URLSearchParams({
+          sub: userData.sub || '',
+          name: userData.name || '',
+          given_name: userData.given_name || '',
+          picture: userData.picture || '',
+          email: userData.email || ''
+        }).toString();
+
+        res.redirect(303, `http://localhost:5173/info?${params}`);
 
       } catch (err) {
         console.log('Error logging in with OAuth2 user', err);
     }
 
 
-    res.redirect(303, 'http://localhost:5173/');
+   
   
 
 
