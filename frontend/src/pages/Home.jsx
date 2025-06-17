@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD:frontend/src/components/Home.jsx
-=======
+
 import GoogleAuthButton from '../components/GoogleAuthButton';
->>>>>>> 2e79700a858a0b0e9a70d62c2e6163e11a983510:frontend/src/pages/Home.jsx
+
 
 const Home = () => {
     const navigate = useNavigate();
