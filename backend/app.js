@@ -1,53 +1,75 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const session = require('express-session');
+const Keycloak = require('keycloak-connect');
+const cors = require('cors');
 
-var authRouter = require('./routes/oauth');
-var requestRouter = require('./routes/request');
-var htmlAuthRouter = require('./routes/htmlAuth');
+// Rutas existentes
+const authRouter = require('./routes/oauth');
+const requestRouter = require('./routes/request');
+const htmlAuthRouter = require('./routes/htmlAuth');
+const htmlFileRouter = require('./routes/htmlResponse');
 
-var htmlFileRouter = require('./routes/htmlResponse');
+const app = express();
 
-var app = express();
+// CORS para frontend React
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
+// Configurar sesión para Keycloak
+const memoryStore = new session.MemoryStore();
+app.use(session({
+  secret: 'una_clave_segura',
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}));
 
-app.options('*',function(req,res,next){
-  res.header("Access-Control-Allow-Origin", 'http://localhost:5173');
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", ['X-Requested-With','content-type','credentials']);
-  res.header('Access-Control-Allow-Methods', 'GET,POST');
-  res.status(200);
-  next()
-})
+// Instanciar Keycloak
+const keycloak = new Keycloak({ store: memoryStore });
+app.use(keycloak.middleware());
 
+// Middleware opcional para usar keycloak en otras rutas
+app.use((req, res, next) => {
+  req.keycloak = keycloak;
+  next();
+});
+
+// Configuraciones base
 app.set('view engine', 'pug');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rutas
 app.use('/oauth', authRouter);
 app.use('/request', requestRouter);
-app.use('/htmlAuth',htmlAuthRouter);
+app.use('/htmlAuth', htmlAuthRouter);
+app.use('/htmlResponse', htmlFileRouter);
 
-app.use('/htmlResponse',htmlFileRouter);
+// ➕ Ruta protegida de ejemplo
+app.get('/protected', keycloak.protect(), (req, res) => {
+  res.json({ message: 'Acceso autorizado. Usuario autenticado con Keycloak.' });
+});
 
-// catch 404 and forward to error handler
+// Errores 404
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Manejador de errores
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
