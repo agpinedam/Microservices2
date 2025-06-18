@@ -34,3 +34,13 @@ La configuration sur le site de google est confuse, car il y a beaucoup d'onglet
 
 La configuration pour permettre l'authentification à partir de keycloak est confuse, car bien que la page donne un exemple d'utilisation avec javascript, elle n'indique pas clairement les termes, par exemple elle ne décrit pas la signification de realm, ce qui rend difficile la compréhension de ce que fait le code. Ensuite, comme dans le cas précédent, l'adresse des URLs n'est pas claire et nous avons eu des problèmes pour accéder à la page qui se lance de Keycloak. 
 
+
+# TP2 : Kubernetes
+
+### Problèmes rencontrés
+
+Pour faire le docker compose push de l'application nous avons eu des problèmes dus à la configuration de docker qui bloquait le processus, de plus il y avait des problèmes avec la version de doker. 
+
+Il y a également eu des problèmes dans la configuration de kubernetes, ainsi lorsque nous avons essayé de créer une connexion à http://vulnnode.infres.fr/lookup.html celle-ci n'a pas été trouvée, nous avons donc dû revenir à la configuration du document précédent et vérifier étape par étape où se trouvait l'erreur.
+
+
