@@ -1,4 +1,4 @@
-# Microservices2# Microservices2
+# Microservices2
 
 Noms :
 
@@ -49,6 +49,7 @@ Problème: Le push ne passe pas
 Après avoir identifié et corrigé un problème d'indentation dans le fichier /etc/rancher/k3s/registries.yaml, nous avons réussi à pousser les images vers le registrey.
 
 ![alt text](Screens/frontend.png)
+
 ![alt text](Screens/backend.png)
 
 Pour l'étape 4 du tp, nous avons commencé par créer un fichier myService.yaml regroupant les deux services frontend et backend
@@ -56,6 +57,7 @@ Pour l'étape 4 du tp, nous avons commencé par créer un fichier myService.yaml
 Problème: Après déploiement sur le cluster, nous n’avons pas pu accéder aux services. 
 
 Message d’erreur rencontré lors de la tentative d’accès :
+
 ![alt text](Screens/Error.png)
 
 Le message d’erreur indiquait que le domaine demandé n’était pas reconnu. Nous avons donc ajouté l’adresse frontend.infres.fr dans le fichier vite.config.js du frontend.
@@ -63,6 +65,24 @@ Le message d’erreur indiquait que le domaine demandé n’était pas reconnu. 
 Après cette modification, les services sont accessibles et fonctionnent correctement : 
 
 ![alt text](Screens/ServiceOK.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # TP Kubernetes Security_2
@@ -82,6 +102,7 @@ pour afficher le token
 
 
 Une fois le token recupéré, on télécharge le binaire kubectl et on teste si on peut créer des pods avec ce token : YES 
+
 ![alt text](image.png)
 
 ## What could had been done to prevent this issue ?
